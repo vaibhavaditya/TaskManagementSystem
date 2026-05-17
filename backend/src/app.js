@@ -1,12 +1,12 @@
 import express from "express";
-import cookieParser from "cookie-parser";
 import cors from "cors";
+import cookieParser from "cookie-parser";
+
+import authRoutes from "./routes/auth.route.js";
+import userRoutes from "./routes/user.route.js";
+import taskRoutes from "./routes/task.route.js";
 
 import { errorMiddleware } from "./middleware/error.middleware.js";
-
-import authRoutes from "./routes/auth.routes.js";
-import userRoutes from "./routes/user.routes.js";
-import taskRoutes from "./routes/task.routes.js";
 
 const app = express();
 
@@ -27,21 +27,15 @@ app.use(
   })
 );
 
-app.use("/uploads", express.static("src/uploads"));
-
-/*
-  Main Routes
-*/
+app.get("/", (req, res) => {
+  res.send("API Running");
+});
 
 app.use("/api/v1/auth", authRoutes);
 
 app.use("/api/v1/users", userRoutes);
 
 app.use("/api/v1/tasks", taskRoutes);
-
-app.get("/", (req, res) => {
-  res.send("Main page");
-});
 
 app.use(errorMiddleware);
 
