@@ -4,22 +4,32 @@ const taskSchema = new mongoose.Schema(
   {
     title: {
       type: String,
-      required: true
+      required: true,
+      trim: true
     },
 
     description: {
-      type: String
+      type: String,
+      trim: true
     },
 
     status: {
       type: String,
-      enum: ["pending", "in-progress", "completed"],
+      enum: [
+        "pending",
+        "in-progress",
+        "completed"
+      ],
       default: "pending"
     },
 
     priority: {
       type: String,
-      enum: ["low", "medium", "high"],
+      enum: [
+        "low",
+        "medium",
+        "high"
+      ],
       default: "medium"
     },
 
@@ -29,14 +39,20 @@ const taskSchema = new mongoose.Schema(
 
     assignedTo: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User"
+      ref: "User",
+      required: true
     },
 
-    documents: [String],
+    documents: [
+      {
+        type: String
+      }
+    ],
 
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User"
+      ref: "User",
+      required: true
     }
   },
   {
@@ -44,6 +60,9 @@ const taskSchema = new mongoose.Schema(
   }
 );
 
-const Task = mongoose.model("Task", taskSchema);
+const Task = mongoose.model(
+  "Task",
+  taskSchema
+);
 
 export default Task;
